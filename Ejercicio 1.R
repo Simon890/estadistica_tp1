@@ -1,0 +1,51 @@
+###############
+# Ejercicio 1 #
+###############
+#Población: Estudiantes de Probabilidad y Estadística de la Comisión 2
+#Objetivos:
+# 1) Porcentaje de la cantidad de formación académica alcanzada
+# 2) Cuántos alumnos tienen Álgebra y Cálculo aprobadas?
+# 3) Cuál es el promedio del colesterol en sangre de los alumnos que nacieron en Marzo?
+
+###########################
+# Instalación de paquetes #
+###########################
+install.packages("qcc")
+library("qcc")
+
+#Cargar archivo csv en una tabla
+encuesta = read.delim("./ejercicio1.csv", header = TRUE, sep=",")
+#Renombrar columnas
+colnames(encuesta)[1] = "res_nro"
+colnames(encuesta)[2] = "legajo"
+colnames(encuesta)[3] = "mes_nacimiento"
+colnames(encuesta)[4] = "sodio_orina"
+colnames(encuesta)[5] = "colesterol_sangre"
+colnames(encuesta)[6] = "vit_d_sangre"
+colnames(encuesta)[7] = "form_academica"
+colnames(encuesta)[8] = "area_estudio"
+colnames(encuesta)[9] = "hobby"
+colnames(encuesta)[10] = "grupo_sangre"
+colnames(encuesta)[11] = "gusta_verde"
+colnames(encuesta)[12] = "ejercicio_frecuencia"
+colnames(encuesta)[13] = "alg_calc_aprobadas"
+colnames(encuesta)[14] = "rinde_flotantes"
+
+#Reemplazar la coma por punto. Ejemplo: 4,5 => 4.5
+
+#Respuesta 1:
+encuesta_frame = as.data.frame(table(encuesta$form_academica))
+encuesta_frame$porc = round(encuesta_frame$Freq/sum(encuesta_frame$Freq) * 100, 2)
+encuesta_barplot = barplot(encuesta_frame$porc, ylab="Porcentaje", main = "Porcentaje de la formación académica de los alumnos", xlab="Tipo de formación", col = c("#98D8AA", "#10A19D", "#F7D060", "#FF6D60", "#D82148"), ylim = c(0, 50))
+axis(1, at = encuesta_barplot, labels=encuesta_frame$Var1, cex.axis=0.9)
+text(encuesta_barplot, encuesta_frame$porc + 1, labels = paste(encuesta_frame$porc, "%"))
+
+#Respuesta 2:
+#Aplicamos un criterio de inclusión en el cual las respuestas que sean distintas de "Si" o "No" 
+#no se tienen en cuenta (Trabajamos con la muestra y no con la población)
+encuesta_filtrada = subset(encuesta, encuesta$alg_calc_aprobadas == "Sí" | encuesta$alg_calc_aprobadas == "No")
+encuesta_frame2 = as.data.frame(table(encuesta_filtrada$alg_calc_aprobadas))
+encuesta_pie = pie(encuesta_frame2$Freq, labels = paste(c("Desaprobado: ", "Aprobado: "), encuesta_frame2$Freq), main = "Cantidad de personas que aprobaron algebra y calculo", col = c("#FF6D60", "#609966"))
+
+#Respuesta 3
+mean(c(1, 2))
