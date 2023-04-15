@@ -11,7 +11,9 @@
 # Instalación de paquetes #
 ###########################
 install.packages("qcc")
+install.packages("ggplot2")
 library("qcc")
+library("ggplot2")
 
 #Cargar archivo csv en una tabla
 encuesta = read.delim("./ejercicio1.csv", header = TRUE, sep=",")
@@ -32,6 +34,7 @@ colnames(encuesta)[13] = "alg_calc_aprobadas"
 colnames(encuesta)[14] = "rinde_flotantes"
 
 #Reemplazar la coma por punto. Ejemplo: 4,5 => 4.5
+encuesta$colesterol_sangre = scan(text = encuesta$colesterol_sangre, dec=",", sep=".")
 
 #Respuesta 1:
 encuesta_frame = as.data.frame(table(encuesta$form_academica))
@@ -48,4 +51,8 @@ encuesta_frame2 = as.data.frame(table(encuesta_filtrada$alg_calc_aprobadas))
 encuesta_pie = pie(encuesta_frame2$Freq, labels = paste(c("Desaprobado: ", "Aprobado: "), encuesta_frame2$Freq), main = "Cantidad de personas que aprobaron algebra y calculo", col = c("#FF6D60", "#609966"))
 
 #Respuesta 3
-mean(c(1, 2))
+encuesta_colesterol = encuesta[, c("res_nro", "colesterol_sangre")]
+encuesta_colesterol$promedio = mean(encuesta_colesterol$colesterol_sangre)
+plot(encuesta_colesterol$res_nro, encuesta_colesterol$colesterol_sangre, type="l", lwd=2, col="#009EFF", main = "Colesterol en sangre", xlab = "Nro Respuesta", ylab="Colesterol en sangre")
+lines(encuesta_colesterol$res_nro, encuesta_colesterol$promedio, lwd=2, col="#D61355")
+legend("topleft", legend = c("Promedio", "Colesterol"), lwd=c(2, 2), col=c("#009EFF", "#D61355"))
