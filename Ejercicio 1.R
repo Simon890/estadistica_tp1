@@ -2,11 +2,20 @@
 # Ejercicio 1 #
 ###############
 #Población: Estudiantes de Probabilidad y Estadística de la Comisión 2
-#Objetivos:
+### Objetivos: ###
 # 1) Porcentaje de la cantidad de formación académica alcanzada
 # 2) Cuántos alumnos tienen Álgebra y Cálculo aprobadas?
 # 3) Cuál es el promedio del colesterol en sangre de los alumnos que nacieron en Marzo?
-
+### Regategorizaciones ###
+# En el ejercicio 1.3 se va a convertir el colesterol en tres variables cualitatativas:
+# Colesterol bajo: Si el colesterol es menor o igual a 65
+# Colesterol normal: Si el colesterol es mayor a 65 y menor o igual a 70
+# Colesterol alto: Si el colesterol es mayor a 70
+### Variables mal medidas o categorizadas ###
+# Mes de nacimiento: Los valores de esta variable poseen distintos formatos lo cual dificulta el uso estadístico. Lo mejor hubiera sido guardar todo como "Enero", "Febrero", "Marzo"... o su valor numérico: "1", "2", "3"...
+# Grupo sanguíneo: Los valores tienen diferentes formatos lo cual dificulta el trabajo. Ejemplo: 0+, 0(+), 0 (+), 0( -)
+# Gusto por el color verde: En este caso, para obtener más información, hubiera sido mejor preguntar qué color es el que se prefiere. Luego, se puede contar la cantidad de "Verdes" que aparecen y saber a cuántas personas les gusta el color verde. Esto se podría repetir por cada color.
+# Tiene Álgebra y Cálculo aprobadas?: Esta variable sería mejor tenerla separada en dos variables distintas: "Álgebra aprobada" y "Cálcula aprobada". De esta manera, para las personas que pusieron "no", se podría saber si tienen al menos una aprobada, lo cual permite realizar diferentes anlálisis.
 ###########################
 # Instalación de paquetes #
 ###########################
@@ -56,3 +65,9 @@ encuesta_colesterol$promedio = mean(encuesta_colesterol$colesterol_sangre)
 plot(encuesta_colesterol$res_nro, encuesta_colesterol$colesterol_sangre, type="l", lwd=2, col="#009EFF", main = "Colesterol en sangre", xlab = "Nro Respuesta", ylab="Colesterol en sangre")
 lines(encuesta_colesterol$res_nro, encuesta_colesterol$promedio, lwd=2, col="#D61355")
 legend("topleft", legend = c("Promedio", "Colesterol"), lwd=c(2, 2), col=c("#009EFF", "#D61355"))
+
+#Recategorización Respuesta 3
+encuesta_recat = as.data.frame(encuesta)
+encuesta_recat$colesterol_sangre[encuesta_recat$colesterol_sangre > 70] = "Alto"
+encuesta_recat$colesterol_sangre[encuesta_recat$colesterol_sangre > 65 & encuesta_recat$colesterol_sangre <= 70] = "Normal"
+encuesta_recat$colesterol_sangre[encuesta_recat$colesterol_sangre <= 65] = "Bajo"
