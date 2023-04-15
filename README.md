@@ -4,7 +4,7 @@
 
 ---
 
-### Link a las bases de dato: https://docs.google.com/spreadsheets/d/1U6P4JZxPdZeF-G9_6x4GgFjxdRW7Db_W/edit?usp=sharing&ouid=100279809176937514275&rtpof=true&sd=true
+### Link a las bases de datos: https://docs.google.com/spreadsheets/d/1U6P4JZxPdZeF-G9_6x4GgFjxdRW7Db_W/edit?usp=sharing&ouid=100279809176937514275&rtpof=true&sd=true
 
 ### Link al documento de entrega: https://docs.google.com/document/d/1LjdHzgjQhdO0xynQWAWgpQdeWKpptbKuC0h0p47n8eQ/edit#
 
