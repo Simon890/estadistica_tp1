@@ -21,6 +21,7 @@
 ########## Importacion del dataset ##########
 
 # En la ventana Environment>import Dataset>From Excel selecciona la ruta al archivo de excel, especificando la hoja 2 
+Trabajo_práctico1_datos = read.delim("./ejercicio2.csv", header=TRUE, sep=",")
 
 install.packages("readxl")
 install.packages("ggplot2")
