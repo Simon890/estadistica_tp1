@@ -20,9 +20,6 @@
 
 ########## Importacion del dataset ##########
 
-# En la ventana Environment>import Dataset>From Excel selecciona la ruta al archivo de excel, especificando la hoja 2 
-Trabajo_práctico1_datos = read.delim("./ejercicio2.csv", header=TRUE, sep=",")
-
 install.packages("readxl")
 install.packages("ggplot2")
 install.packages("dplyr")
@@ -31,13 +28,17 @@ library(readxl)
 library(ggplot2)
 library(dplyr)
 
+Trabajo_práctico1_datos = read.delim("./ejercicio2.csv", header=TRUE, sep=",")
+
 # renombro para facilidad del acceso
+colnames(Trabajo_práctico1_datos)[1] = "nro_placa"
+colnames(Trabajo_práctico1_datos)[2] = "nro_defectos"
 
 data2 <- Trabajo_práctico1_datos
 
 ######### Ejercicio a ##########
 
-promedio_defectos = mean(data2$`N° de defectos`)
+promedio_defectos = mean(data2$nro_defectos)
 
 if (promedio_defectos > 1.2) {
   print("El lote no cumple con la exigencia del cliente")
@@ -61,11 +62,8 @@ if (promedio_defectos > 1.2) {
 
 
 ######### Ejercicio c ##########
-
 grp = as.data.frame(data2 %>%
-                    count(`N° de defectos`))
-
-print(grp)
+                    count(`nro_defectos`))
 
 # Este dataframe indica que si bien muchas de las tablas tiene solo un error
 # Muchas otras tienen dos o mas errores,lo que desbalancea el promedio general 
@@ -79,13 +77,12 @@ print(grp)
 ######### Ejercicio d ##########
 
 ## Calculo y grafico de medida de localizacion: La moda
+mode <- as.numeric(grp[which.max(grp$n), "nro_defectos"])
 
-mode <- as.numeric(grp[which.max(grp$n), "N° de defectos"])
-
-colores <- ifelse(seq_along(grp$`N° de defectos`) == mode+1, "#B1AFFF" , "#AAE3E2")
+colores <- ifelse(seq_along(grp$nro_defectos) == mode+1, "#B1AFFF" , "#AAE3E2")
 
 barplot(height=grp$n,
-        names.arg = grp$`N° de defectos`,
+        names.arg = grp$nro_defectos,
         col=colores,
         main='Ocurrencia de defectos',
         ylab='numero de ocurrencias',
@@ -97,7 +94,7 @@ legend("topright", "Moda", fill = "#B1AFFF")
 
 ## Calculo y grafico de medidas de localizacion: Boxplot
 
-boxplot(data2$`N° de defectos`,
+boxplot(data2$nro_defectos,
         col = "#FFAACF",
         border = "#7286D3",
         ylab="Numero de Defectos")
@@ -107,22 +104,22 @@ boxplot(data2$`N° de defectos`,
 
 ## Calculo y grafico de medida de dispersion: Desviacion Estandar
 
-deviacion_standar = sd(data2$`N° de defectos`)
+deviacion_standar = sd(data2$nro_defectos)
 
 data2 %>%
-  ggplot( aes(x=`N° de defectos`)) +
+  ggplot( aes(x=`nro_defectos`)) +
   geom_density(fill="#11a3a2",
                color="black",
                alpha=0.5) +
   geom_vline(xintercept=promedio_defectos, size=0.7, color="#FF9494") +
-  geom_text(aes(x= promedio_defectos, label=paste0("Promedio:", mean(data2$`N° de defectos`)), y=0.6))+
+  geom_text(aes(x= promedio_defectos, label=paste0("Promedio:", mean(data2$nro_defectos)), y=0.6))+
   geom_vline(xintercept=promedio_defectos+deviacion_standar, size=0.5,linetype="dashed" , color="#1572A1")+
   geom_vline(xintercept=promedio_defectos-deviacion_standar , size=0.5, linetype="dashed", color="#1572A1")
 
 
 ## Calculo de medida de dispercion: Coeficiente de variacion
 
-coeficiente_variacion <- deviacion_standar / promedio_defectos_defectos * 100
+coeficiente_variacion <- deviacion_standar / promedio_defectos * 100
 print(paste("coeficiente de variacion: ", coeficiente_variacion))
 
 # Esto valor significa que el conjunto de datos tiene una variabilidad relativamente alta en comparación con su media.
