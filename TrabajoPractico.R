@@ -4,7 +4,8 @@
 
 
 # Seteamos el directorio de trabajo
-setwd("C:/Users/Fabio/OneDrive/Documentos/Academic/TUIA/IA31")
+wd = "Guardar acá el directorio de trabajo correspondiente"
+setwd(wd)
 
 
 # Instalación de paquetes
