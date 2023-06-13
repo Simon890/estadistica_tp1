@@ -1,8 +1,5 @@
-# Estadística TP 1
-
-## Trabajo Práctico Estadística 1
-
----
+<details>
+  <summary>Trabajo Práctico 1</summary>
 
 ### Link a las bases de datos: https://docs.google.com/spreadsheets/d/1U6P4JZxPdZeF-G9_6x4GgFjxdRW7Db_W/edit?usp=sharing&ouid=100279809176937514275&rtpof=true&sd=true
 
@@ -40,3 +37,32 @@ La vitamina D es un nutriente muy importante para la salud humana ya que es una 
 - Plantee el problema, defina población, variable y parámetro/s de interés.
 - Plantee un objetivo en términos de dicho/s parámetro/s.
 - Analice exhaustivamente los datos (incluya dos gráficos). Responda al objetivo planteado. Indique si sus conclusiones son preliminares o definitivas. 
+  
+</details>
+
+<details>
+  <summary> Trabajo Práctico 2</summary>
+  
+  Link al docs para entregar: https://docs.google.com/document/d/1RPjX35Aynwp6DRyJ2ENSUTYEdN6ZjR_kw9zOALLLSZ4/edit?usp=sharing
+  
+  ### **ACTIVIDAD 1** 
+  
+  Reconsidere la actividad 3 del trabajo práctico 1
+  
+  Realice un análisis completo (incluyendo el planteo del problema, el análisis descriptivo, inferencial y conclusiones).
+
+  Los datos correspondientes se encuentran en el link https://docs.google.com/spreadsheets/d/1U6P4JZxPdZeF-G9_6x4GgFjxdRW7Db_W/edit#gid=1307188619.
+  
+  ---
+  
+  ### **ACTIVIDAD 2** 
+  
+  Reconsidere el Problema 6, Material 1, pág. 6 
+
+ Un comitente desea conocer ciertas características de un tramo de ruta de 5 km ya construido. Concretamente quiere establecer si la ruta cumple con las exigencias de calidad en cuanto a espesor y resistencia. Se pretende que como máximo en el 5% de los puntos la resistencia a la compresión sea menor que 30 MPa y que el espesor promedio sea igual a 22 cm. También se quiere analizar la homogeneidad de la ruta, tanto en relación al espesor como en relación a la resistencia a la compresión, en los distintos sectores de ese tramo de 5 km.
+
+ Se seleccionaron aleatoriamente 100 puntos de ese tramo y en cada uno se midió espesor y resistencia. Los datos correspondientes se encuentran en el link https://docs.google.com/spreadsheets/d/1U6P4JZxPdZeF-G9_6x4GgFjxdRW7Db_W/edit#gid=1307188619.
+  
+ </details>
+  
+  
