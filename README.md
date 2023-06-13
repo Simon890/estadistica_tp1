@@ -47,6 +47,8 @@ La vitamina D es un nutriente muy importante para la salud humana ya que es una 
 <details>
   <summary>Trabajo Práctico 2</summary>
   
+  ### Link al docs para entregar: https://docs.google.com/document/d/1RPjX35Aynwp6DRyJ2ENSUTYEdN6ZjR_kw9zOALLLSZ4/edit?usp=sharing
+  
   ### **ACTIVIDAD 1** 
   
 Reconsidere la actividad 3 del trabajo práctico 1. Realice un análisis completo
