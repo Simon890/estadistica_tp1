@@ -42,9 +42,11 @@
 # Los datos son provistos por el enunciado. Consta de una tabla de 100 registros (puntos) donde se almacena el Punto, la Resistencia en MPa y el Espesor en cm.
 
 install.packages("ggplot2")
-library("ggplot2")
-
-wd = "ruta/a/carpeta"
+install.packages("gridExtra")
+library(gridExtra)
+library(ggplot2)
+ 
+wd = "C:/Users/Fabio/OneDrive/Documentos/Academic/TUIA/IA31"
 setwd(wd)
 
 ruta = read.csv("./ejercicio2_tp2.csv")
@@ -62,6 +64,16 @@ summary(ruta)
 str(ruta)
 
 # Las columnas Espesor y Resistencia son de tipo string
-ruta$espesor <- as.numeric(gsub(",", ".", ruta$espesor))
-ruta$resistencia <- as.numeric(gsub(",", ".", ruta$resistencia))
+ruta$Espesor <- as.numeric(gsub(",", ".", ruta$Espesor))
+ruta$Resistencia <- as.numeric(gsub(",", ".", ruta$Resistencia))
+
+# Renombrar la columna
+colnames(ruta)[1] = 'Puntos'
+
+# Los datos ahora parecen estar bien. Veamos en un grafico sus distribuciones
+hist_espesor <- ggplot(ruta, aes(x = Espesor)) + geom_histogram()
+hist_resistencia <- ggplot(ruta, aes(x = Resistencia)) + geom_histogram()
+scatterplot <- ggplot(ruta, aes(x = Espesor,  y = Resistencia)) + geom_point()
+
+grid.arrange(hist_resistencia, hist_espesor, scatterplot, nrow = 3)
 
