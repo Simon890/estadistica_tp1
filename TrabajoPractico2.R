@@ -43,10 +43,15 @@
 
 install.packages("ggplot2")
 install.packages("gridExtra")
+install.packages("DescTools")
+install.packages("nortest")
+
 library(gridExtra)
 library(ggplot2)
+library(DescTools)
+library(nortest)
  
-wd = "C:/Users/Fabio/OneDrive/Documentos/Academic/TUIA/IA31"
+wd = "/home/Shannon/Documents/Academic/IA_3_1"
 setwd(wd)
 
 ruta = read.csv("./ejercicio2_tp2.csv")
@@ -60,7 +65,6 @@ head(ruta)
 
 # Tratamiento Primario
 
-summary(ruta)
 str(ruta)
 
 # Las columnas Espesor y Resistencia son de tipo string
@@ -68,12 +72,61 @@ ruta$Espesor <- as.numeric(gsub(",", ".", ruta$Espesor))
 ruta$Resistencia <- as.numeric(gsub(",", ".", ruta$Resistencia))
 
 # Renombrar la columna
-colnames(ruta)[1] = 'Puntos'
+colnames(ruta)[1] = 'Punto'
+
+
+# Analisis Descriptivo
+
+summary(ruta)
 
 # Los datos ahora parecen estar bien. Veamos en un grafico sus distribuciones
 hist_espesor <- ggplot(ruta, aes(x = Espesor)) + geom_histogram()
 hist_resistencia <- ggplot(ruta, aes(x = Resistencia)) + geom_histogram()
 scatterplot <- ggplot(ruta, aes(x = Espesor,  y = Resistencia)) + geom_point()
 
-grid.arrange(hist_resistencia, hist_espesor, scatterplot, nrow = 3)
+# Crear un boxplot para la variable de resistencia
+boxplot_resistencia <- ggplot(ruta, aes(x = factor(0), y = Resistencia)) +
+  geom_boxplot() +
+  labs(x = "", y = "Resistencia (MPa)")
+
+# Crear un boxplot para la variable de espesor
+boxplot_espesor <- ggplot(ruta, aes(x = factor(0), y = Espesor)) +
+  geom_boxplot() +
+  labs(x = "", y = "Espesor (cm)")
+
+# Visualizar los cinco gráficos
+grid.arrange(hist_espesor, hist_resistencia, scatterplot, boxplot_espesor, boxplot_resistencia,
+             layout_matrix = rbind(c(1, 2), c(3, 3), c(4, 5)))
+
+# Calcular el porcentaje de puntos que tienen una resistencia a la compresión mayor o igual a 30 MPa 
+ruta$ResistenciaMayorIgualA30 <- ifelse(ruta$Resistencia >=30 ,1 ,0)
+porcentaje_resistencia_mayor_igual_30 <- sum(ruta$ResistenciaMayorIgualA30)/nrow(ruta)*100
+porcentaje_resistencia_mayor_igual_30
+
+# Calcular el promedio del espesor
+promedio_espesor <- mean(ruta$Espesor)
+promedio_espesor
+
+# Correlacion entre las variable
+cor(ruta$Espesor, ruta$Resistencia)
+
+
+# Anaisis Inferencial
+
+# Probemos la normalidad de la variable Resistencia
+qqnorm(ruta$Resistencia)
+qqline(ruta$Resistencia)
+
+ad.test(ruta$Resistencia)
+
+# Probemos la normalidad de la variable Espesor
+qqnorm(ruta$Espesor)
+qqline(ruta$Espesor)
+
+ad.test(ruta$Espesor)
+
+# Ambos poseen valores p-value > 10, por lo que no podemos descartar la normalidad
+
+# Vimos que el promedio muestral es de 22.41197 != 22. Pero, podemos asegurar que esto se cumple para toda la poblacion?
+MeanCI(ruta$Espesor, sd=NULL, method="classic", conf.level=0.99)
 
