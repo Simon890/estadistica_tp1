@@ -44,7 +44,7 @@ setwd(wd)
 # - Espesor: Variable cuantitativa continua. Indica el grosor de la capa de la ruta en cm.
 
 # Estadisticos:
-# - Al menos el 5% de los puntos de la muestra deben tener una resistencia a la compresión que 30 MPa.
+# - Al menos el 5% de los puntos de la muestra deben tener una resistencia a la compresión menor que 30 MPa.
 # - El espesor promedio debe ser igual a 22 cm.
 # - Homogeneidad de la muestra.
 
@@ -119,12 +119,12 @@ grid.arrange(hist_espesor, hist_resistencia, scatterplot, boxplot_espesor, boxpl
 cor(ruta$Espesor, ruta$Resistencia)
 
 
-# Calcular el porcentaje de puntos que tienen una resistencia a la compresión mayor o igual a 30 MPa 
-ruta$ResistenciaMayorIgualA30 <- ifelse(ruta$Resistencia >=30 ,1 ,0)
-porcentaje_resistencia_mayor_igual_30 <- sum(ruta$ResistenciaMayorIgualA30)/nrow(ruta)*100
-porcentaje_resistencia_mayor_igual_30
+# Calcular el porcentaje de puntos que tienen una resistencia a la compresión menor a 30 MPa 
+ruta$ResistenciaMenorA30 <- ifelse(ruta$Resistencia < 30 ,1 ,0)
+porcentaje_resistencia_menor_30 <- sum(ruta$ResistenciaMenorA30)/nrow(ruta)*100
+porcentaje_resistencia_menor_30
 
-# Para esta muestra, el 82% de los puntos tienen resistencia a la compresion mayor a 30MPa
+# Para esta muestra, el 18% de los puntos tienen resistencia a la compresion menor a 30MPa
 
 # Calcular el promedio del espesor
 promedio_espesor <- mean(ruta$Espesor)
@@ -152,25 +152,26 @@ ad.test(ruta$Espesor)
 
 # Muchos puntos son cercanos a la linea y su p-value=0.485
 
-# Ambos poseen valores p-value > 10, por lo que no podemos descartar la normalidad
+# Ambos poseen valores p-value > 0.10, por lo que no podemos descartar la normalidad
 
 
 # Vimos que el promedio muestral es de 22.41197 != 22. Pero, podemos asegurar que esto se cumple para toda la poblacion?
 MeanCI(ruta$Espesor, sd=NULL, method="classic", conf.level=0.99)
 
 # Como no conocemos el desvio estandar poblacional dejamos que R lo estime y utilice un 99% de confianza para estimar el intervalo
-# Podemos asegurar entonces, que con un 99% de confianza, el espesor medio de la ruta es de 22.41197 ± 1.19834 centimetros
+# Podemos asegurar entonces, que con un 99% de confianza, el espesor medio de la ruta es de 22.41197 ± 1.19834 centimetros.
+# Y por lo tanto, no podemos asegurar que el espesor promedio de la ruta sea 22 cm.
 
 
-# El requerimiento era que al menos el 5% de los puntos de la muestra deben tener una resistencia a la compresión mayory que 30 MPa,
-# y como calculamos conporcentaje_resistencia_mayor_igual_30, vemos que el porcentaje de puntos mayores a 30MPa es de 82%.
+# El requerimiento era que al menos el 5% de los puntos de la muestra deben tener una resistencia a la compresión menor que 30 MPa,
+# y como calculamos conporcentaje_resistencia_menor_30, vemos que el porcentaje de puntos menores a 30MPa es de 18%.
 # Pero, podemos asumir que eso ocurre en toda la poblacion?
-BinomCI(sum(ruta$ResistenciaMayorIgualA30), nrow(ruta), conf.level = 0.99, method = "wald")
+BinomCI(sum(ruta$ResistenciaMenorA30), nrow(ruta), conf.level = 0.99, method = "wald")
 
-# Podemos asegurar con un 99% de confianza que la proporcion de puntos que tienen una resistencia a la compresion mayor a 30 MPa es de 0.82 ± 0.0989601 
+# Podemos asegurar con un 99% de confianza que la proporcion de puntos que tienen una resistencia a la compresion menor a 30 MPa es de 0.18 ± 0.098
 
-# Por lo tanto, podemos concluir que al menos el requerimiento de resistencia se cumple para toda la ruta.
-# Pero en cambio, del espesor no podemos asegurar que se cumpla ya que puede estar entre 21.213 y 23.610.
+# Por lo tanto, no se cumple que como maximo el 5% de los puntos tenga resistencia menor a 30 MPa, sino que entre el 8 y 27% de los puntos son menores que 30 MPa.
+# Del espesor medio no podemos asegurar que se cumpla ya que puede estar entre 21.213 y 23.610 (con 99% de confianza).
 
 
 
